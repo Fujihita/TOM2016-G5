@@ -1,13 +1,3 @@
-/*
-_______________________________________________________________________
-
-   Motor.cpp - Motor control library for EPROCON 2014
-   Created by Nguyen Tung, January 13, 2014
-   Vietnamese German University
-   Internal use only
-_______________________________________________________________________
-*/
-
 #include "Arduino.h"
 #include "Motor.h"
 
