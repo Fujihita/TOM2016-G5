@@ -17,8 +17,8 @@
 #define   MotorSpd3     6
 #define   MotorDir3     7
 
-#define   MotorSpd4     11
-#define   MotorDir4     12
+#define   MotorSpd4     9
+#define   MotorDir4     8
 
 #define   TimeDelay     2000
 #define   TimeDebounce  50
@@ -54,24 +54,34 @@ void setup()
 
 void loop()
 {
-  motor1.run(100);
-  motor2.run(100);
-  motor3.run(100);
-  motor4.run(100);
-  delay(2000);
   motor1.run(255);
-  motor2.run(255);  
+  motor2.run(255);
+  motor3.run(255);
+  motor4.run(255);
   delay(2000);
   motor1.run(0);
   motor2.run(0); 
+  motor3.run(0);
+  motor4.run(0);
   delay(2000);
- /*if(button1.read())
+  motor1.run(-255);
+  motor2.run(-255);
+  motor3.run(-255);
+  motor4.run(-255);  
+  delay(2000);
+  motor1.run(0);
+  motor2.run(0); 
+  motor3.run(0);
+  motor4.run(0);
+  delay(2000);
+
+ if(button1.read())
  {
     // function of button 1 
  }
  if(button2.read())
  {
     // function of button 2
- } */
+ } 
 }
 
