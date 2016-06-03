@@ -1,88 +1,156 @@
 #include <Motor.h> // include Motor control library
 #include <Keypad.h>
-
-#define   KeyPadCol1    3
-#define   KeyPadCol2    4
-#define   KeyPadCol3    5
-#define   KeyPadRow1    6
-#define   KeyPadRow2    7
-#define   KeyPadRow3    8
-#define   KeyPadRow4    9
-#define   cols     3
-#define   rows     4
-
-#define   MotorSpd1     3
-#define   MotorDir1     2
-
-#define   MotorSpd2     5
-#define   MotorDir2     4
-
-#define   MotorSpd3     6
-#define   MotorDir3     7
-
-#define   MotorSpd4     9
-#define   MotorDir4     8
-
-#define   TimeDelay     2000
-#define   TimeDebounce  50
-
-//load default pin mapping
-  Motor motor1 (MotorSpd1, MotorDir1); // create motor 1 object
-  Motor motor2 (MotorSpd2, MotorDir2); // create motor 2 object
-  Motor motor3 (MotorSpd3, MotorDir3); // create motor 2 object
-  Motor motor4 (MotorSpd4, MotorDir4); // create motor 2 object
-
-//declare timer
-long timer = 0;
-
-//setup keypad
-char keys[rows][cols] = {
-  {'1','2','3'},
-  {'4','5','6'},
-  {'7','8','9'},
-  {'*','0','#'}
-};
-byte rowPins[rows] = {KeyPadRow4, KeyPadRow3, KeyPadRow2, KeyPadRow1}; //connect to the row pinouts of the keypad
-byte colPins[cols] = {KeyPadCol3, KeyPadCol2, KeyPadCol1}; //connect to the column pinouts of the keypad
-Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, rows, cols );
+#include <EEPROM.h>
+#include "TOM2016.h"
 
 void setup()
 {
-  Serial.begin(9600);
-/*  
+  Serial.begin(9600);  
 //initialize starting values
-  motor1.base(255);
-  motor2.base(255);
-  motor3.base(255);
-  motor4.base(255);
-  
   motor1.run(0);
   motor2.run(0);
   motor3.run(0);
   motor4.run(0);
-*/
+  
+  timer = millis();
 }
 
 void loop()
 {
-  char key = keypad.getKey();
+// get keys input
+  if (keypad.getKeys())
+    {
+      char input[4] = "abc";
+      int k = 0;       
+        for (int i=0; i<LIST_MAX; i++)   // Scan the whole key list.
+        {
+          if(keypad.key[i].stateChanged){
+              if ((keypad.key[i].kstate == PRESSED) || (keypad.key[i].kstate == HOLD)){
+                  input[k] = keypad.key[i].kchar;
+                  k++;
+              }
+          }
+        }
+      eventHandler(input);
+    }
 
-  if (key != NO_KEY){
-    Serial.println(key);
-/* if(digitalRead(IN1) == HIGH)
- {
-  motor1.run(255);
-  motor2.run(255);
-  motor3.run(255);
-  motor4.run(255);
- }
- else
- {
-  motor1.run(0);
-  motor2.run(0);
-  motor3.run(0);
-  motor4.run(0);
- }
+  taskManager();
+}
+
+bool comboMatch(char match[3], char key[3]) // RegEx("/[abc]/)
+{
+  int count = 0;
+  for (int i = 0; i < 3; i++)
+  {
+    if ((key[i] == match[0]) || (key[i] == match[1]) || (key[i] == match[2]))
+    count++; 
+  }
+  if (count == 3)
+  return true;
+  else
+  return false;
+}
+
+void eventHandler(char input[4])
+{
+    char match[4] = "127";
+    if(comboMatch(match,input)){
+    
+            Serial.println("127");
+    }
+    strcpy(match, "16c");
+    if(comboMatch(match,input)){
+            Serial.println("17");
+    }
+    strcpy(match, "1bc");
+    if(comboMatch(match,input)){
+            Serial.println("1");
+            task = 1;
+    }
+    strcpy(match, "2bc");
+    if(comboMatch(match,input)){
+            Serial.println("2");
+            task = 1;
+    }
+    strcpy(match, "3bc");
+    if(comboMatch(match,input)){
+            Serial.println("3");
+    }
+    strcpy(match, "4bc");
+    if(comboMatch(match,input)){
+            Serial.println("4");
+    }
+    strcpy(match, "5bc");
+    if(comboMatch(match,input)){
+            Serial.println("5");
+    }
+    strcpy(match, "6bc");
+    if(comboMatch(match,input)){
+            Serial.println("6");
+    }
+    strcpy(match, "7bc");
+    if(comboMatch(match,input)){
+            Serial.println("7");
+    }
+    strcpy(match, "8bc");
+    if(comboMatch(match,input)){
+            Serial.println("8");
+    }
+    strcpy(match, "9bc");
+    if(comboMatch(match,input)){
+            Serial.println("9");
+    }
+    strcpy(match, "0bc");
+    if(comboMatch(match,input)){
+            Serial.println("0");
+    }
+    strcpy(match, "*bc");
+    if(comboMatch(match,input)){
+            Serial.println("*");
+    }
+    strcpy(match, "#bc");
+    if(comboMatch(match,input)){
+            Serial.println("#");
+    }  
+}
+
+void setLock(Motor motor)
+{
+  // function to lock a finger
+}
+
+void releaseLock(Motor motor)
+{
+  // function fo free a finger
+}
+
+void taskManager()
+{
+/*
+EEPROM.update(0,highByte(yourInteger);
+EEPROM.update(1,lowByte(yourInteger);
+
+byte high = EEPROM.read(0);
+byte low = EEPROM.read(1);
+int myInteger=word(high,low);
 */ 
+  switch(task){
+    case 1: // Free finger(1)
+    {
+            releaseLock(motor1);
+            setLock(motor2);
+            setLock(motor3);
+            setLock(motor4);
+            break;
+    }  
+    case 2: // Free finger(2)
+    {
+            setLock(motor1);
+            releaseLock(motor2);
+            setLock(motor3);
+            setLock(motor4);
+            break;
+    }
+  }
 }
-}
+
