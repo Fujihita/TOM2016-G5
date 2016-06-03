@@ -1,5 +1,4 @@
 #include <Motor.h> // include Motor control library
-#include <Button.h>
 
 #define   IN1      A0
 #define   IN2      A1
@@ -28,12 +27,6 @@
   Motor motor2 (MotorSpd2, MotorDir2); // create motor 2 object
   Motor motor3 (MotorSpd3, MotorDir3); // create motor 2 object
   Motor motor4 (MotorSpd4, MotorDir4); // create motor 2 object
-  Button button1 (IN1, TimeDebounce);
-  Button button2 (IN2, TimeDebounce);
-  Button button3 (IN3, TimeDebounce);
-  Button button4 (IN4, TimeDebounce);
-  Button button5 (IN5, TimeDebounce);
-  Button button6 (IN6, TimeDebounce);
 
 //declare timer
 long timer = 0;
@@ -54,34 +47,20 @@ void setup()
 
 void loop()
 {
+ if(digitalRead(IN1) == HIGH)
+ {
   motor1.run(255);
   motor2.run(255);
   motor3.run(255);
   motor4.run(255);
-  delay(2000);
-  motor1.run(0);
-  motor2.run(0); 
-  motor3.run(0);
-  motor4.run(0);
-  delay(2000);
-  motor1.run(-255);
-  motor2.run(-255);
-  motor3.run(-255);
-  motor4.run(-255);  
-  delay(2000);
-  motor1.run(0);
-  motor2.run(0); 
-  motor3.run(0);
-  motor4.run(0);
-  delay(2000);
-
- if(button1.read())
- {
-    // function of button 1 
  }
- if(button2.read())
+ else
  {
-    // function of button 2
- } 
+  motor1.run(0);
+  motor2.run(0);
+  motor3.run(0);
+  motor4.run(0);
+ }
+ 
 }
 
