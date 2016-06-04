@@ -16,9 +16,9 @@ class Finger
  
   private:
   Motor _motor;
-  unsigned int _timeout;
-  long _timer;
-  long _offset;
+  unsigned long _timeout;
+  unsigned long _timer;
+  unsigned long _offset;
   bool _dir;
   int _status; // resetting = 0, locking = 1, unlocking = 2
   void _setLock();
