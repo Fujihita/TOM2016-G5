@@ -1,0 +1,6 @@
+Finger	KEYWORD1
+lock	KEYWORD2
+unlock	KEYWORD2
+reset	KEYWORD2
+run	KEYWORD2
+timeout	KEYWORD2

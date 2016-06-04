@@ -24,7 +24,9 @@ void Motor::run(int sp)
   analogWrite(_spPin, sp);
 }
 
+
 void Motor::base(int base)
 {
   _base = base;
 }
+

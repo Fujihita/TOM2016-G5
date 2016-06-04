@@ -1,17 +1,13 @@
 #include <Motor.h> // include Motor control library
 #include <Keypad.h>
 #include <EEPROM.h>
+#include <Finger.h>
 #include "TOM2016.h"
 
 void setup()
 {
   Serial.begin(9600);  
 //initialize starting values
-  motor1.run(0);
-  motor2.run(0);
-  motor3.run(0);
-  motor4.run(0);
-  
   timer = millis();
 }
 
@@ -33,11 +29,14 @@ void loop()
         }
       eventHandler(input);
     }
-
-  taskManager();
+    
+  finger1.run();
+  finger2.run();
+  finger3.run();
+  finger4.run();
 }
 
-bool comboMatch(char match[3], char key[3]) // RegEx("/[abc]/)
+bool comboMatch(char match[3], char key[3]) // RegEx("/[abc]/")
 {
   int count = 0;
   for (int i = 0; i < 3; i++)
@@ -60,72 +59,67 @@ void eventHandler(char input[4])
     }
     strcpy(match, "16c");
     if(comboMatch(match,input)){
-            Serial.println("17");
+            Serial.println("16");
     }
     strcpy(match, "1bc");
     if(comboMatch(match,input)){
             Serial.println("1");
-            task = 1;
+            finger1.unlock();
+            finger2.lock();
+            finger3.lock();
+            finger4.lock();
     }
     strcpy(match, "2bc");
     if(comboMatch(match,input)){
             Serial.println("2");
-            task = 1;
+            finger1.lock();
+            finger2.unlock();
+            finger3.lock();
+            finger4.lock();
     }
     strcpy(match, "3bc");
     if(comboMatch(match,input)){
             Serial.println("3");
+            finger1.lock();
+            finger2.lock();
+            finger3.unlock();
+            finger4.lock();
     }
     strcpy(match, "4bc");
     if(comboMatch(match,input)){
             Serial.println("4");
+            finger1.lock();
+            finger2.lock();
+            finger3.lock();
+            finger4.unlock();
     }
     strcpy(match, "5bc");
     if(comboMatch(match,input)){
             Serial.println("5");
+            finger1.reset();        
+            finger2.reset();
+            finger3.reset();
+            finger4.reset();
     }
     strcpy(match, "6bc");
     if(comboMatch(match,input)){
-            Serial.println("6");
-    }
-    strcpy(match, "7bc");
-    if(comboMatch(match,input)){
-            Serial.println("7");
-    }
-    strcpy(match, "8bc");
-    if(comboMatch(match,input)){
-            Serial.println("8");
-    }
-    strcpy(match, "9bc");
-    if(comboMatch(match,input)){
-            Serial.println("9");
+            //Serial.println("6");
     }
     strcpy(match, "0bc");
     if(comboMatch(match,input)){
-            Serial.println("0");
+            //Serial.println("0");
     }
     strcpy(match, "*bc");
     if(comboMatch(match,input)){
-            Serial.println("*");
+            //Serial.println("*");
     }
     strcpy(match, "#bc");
     if(comboMatch(match,input)){
-            Serial.println("#");
+            //Serial.println("#");
     }  
 }
 
-void setLock(Motor motor)
-{
-  // function to lock a finger
-}
 
-void releaseLock(Motor motor)
-{
-  // function fo free a finger
-}
-
-void taskManager()
-{
 /*
 EEPROM.update(0,highByte(yourInteger);
 EEPROM.update(1,lowByte(yourInteger);
@@ -134,23 +128,3 @@ byte high = EEPROM.read(0);
 byte low = EEPROM.read(1);
 int myInteger=word(high,low);
 */ 
-  switch(task){
-    case 1: // Free finger(1)
-    {
-            releaseLock(motor1);
-            setLock(motor2);
-            setLock(motor3);
-            setLock(motor4);
-            break;
-    }  
-    case 2: // Free finger(2)
-    {
-            setLock(motor1);
-            releaseLock(motor2);
-            setLock(motor3);
-            setLock(motor4);
-            break;
-    }
-  }
-}
-

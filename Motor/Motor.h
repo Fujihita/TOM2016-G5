@@ -7,9 +7,9 @@ class Motor
 {
   public:
   Motor(int spPin, int dirPin);
-  void run(int sp);
   void base(int base);
-  
+  void run(int sp);
+
   private:
   int _base;
   int _spPin;
