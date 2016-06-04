@@ -1,6 +1,7 @@
 #include "Arduino.h"
 #include "Motor.h"
 #include "Finger.h"
+#define	SPEED	150
 
 Finger::Finger(int spPin, int dirPin) : _motor(spPin, dirPin)
 {
@@ -22,9 +23,6 @@ void Finger::lock(){
 //_motor.run(0);
 	_setLock();
 	_status = 0;
-	Serial.print("From lock: ");
-	Serial.println(_offset);
-
 }
 
 void Finger::reset(){
@@ -35,16 +33,20 @@ void Finger::reset(){
 		_dir = false;
 		_offset = _timeout - _offset; 	// inverse offset progress
 	}
-	
-	Serial.print("From reset: ");
-	Serial.println(_offset);
+	_motor.run(-SPEED);
 }
 
 void Finger::unlock(){
-//_motor.run(255);
+//_motor.run(SPEED);
+	if (_dir)
+	{
+		_motor.run(SPEED);
+	}
+	else
+	{
+		_motor.run(-SPEED);
+	}
 	_status = 2;
-	Serial.print("From unlock: ");
-	Serial.println(_offset);
 }
 
 void Finger::run(){	
@@ -78,15 +80,17 @@ void Finger::_releaseLock()
   	// function fo free a finger
 	if (_offset > _timeout)
 	{
-		_motor.run(-255);
-		_dir = false;
+		_motor.run(SPEED);
+		_dir = !_dir;
 		_offset = 0;
-	}
-	else if (_offset < 0)
-	{
-		_motor.run(255);
-		_dir = true;
-		_offset = 0;
+		if (_dir)
+		{
+			_motor.run(SPEED);
+		}
+		else
+		{
+			_motor.run(-SPEED);
+		}
 	}
 }
 

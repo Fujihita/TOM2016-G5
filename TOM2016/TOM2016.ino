@@ -6,13 +6,22 @@
 
 void setup()
 {
-  Serial.begin(9600);  
+//  Serial.begin(9600);  
 //initialize starting values
   timer = millis();
+  //motor1.run(255);
+  //motor2.run(255);
+  //motor3.run(255);
+  //motor4.run(255);
 }
 
 void loop()
-{
+{  
+  finger1.run();
+  finger2.run();
+  finger3.run();
+  finger4.run();
+  
 // get keys input
   if (keypad.getKeys())
     {
@@ -29,11 +38,6 @@ void loop()
         }
       eventHandler(input);
     }
-    
-  finger1.run();
-  finger2.run();
-  finger3.run();
-  finger4.run();
 }
 
 bool comboMatch(char match[3], char key[3]) // RegEx("/[abc]/")
@@ -52,18 +56,9 @@ bool comboMatch(char match[3], char key[3]) // RegEx("/[abc]/")
 
 void eventHandler(char input[4])
 {
-    char match[4] = "127";
+    char match[4] = "1bc";
     if(comboMatch(match,input)){
-    
-            Serial.println("127");
-    }
-    strcpy(match, "16c");
-    if(comboMatch(match,input)){
-            Serial.println("16");
-    }
-    strcpy(match, "1bc");
-    if(comboMatch(match,input)){
-            Serial.println("1");
+            //Serial.println("1");
             finger1.unlock();
             finger2.lock();
             finger3.lock();
@@ -71,7 +66,7 @@ void eventHandler(char input[4])
     }
     strcpy(match, "2bc");
     if(comboMatch(match,input)){
-            Serial.println("2");
+           // Serial.println("2");
             finger1.lock();
             finger2.unlock();
             finger3.lock();
@@ -79,7 +74,7 @@ void eventHandler(char input[4])
     }
     strcpy(match, "3bc");
     if(comboMatch(match,input)){
-            Serial.println("3");
+           // Serial.println("3");
             finger1.lock();
             finger2.lock();
             finger3.unlock();
@@ -87,7 +82,7 @@ void eventHandler(char input[4])
     }
     strcpy(match, "4bc");
     if(comboMatch(match,input)){
-            Serial.println("4");
+            //Serial.println("4");
             finger1.lock();
             finger2.lock();
             finger3.lock();
@@ -95,11 +90,11 @@ void eventHandler(char input[4])
     }
     strcpy(match, "5bc");
     if(comboMatch(match,input)){
-            Serial.println("5");
-            finger1.reset();        
-            finger2.reset();
-            finger3.reset();
-            finger4.reset();
+           // Serial.println("5");
+            finger1.unlock();
+            finger2.unlock();
+            finger3.unlock();
+            finger4.unlock();
     }
     strcpy(match, "6bc");
     if(comboMatch(match,input)){
@@ -107,7 +102,11 @@ void eventHandler(char input[4])
     }
     strcpy(match, "0bc");
     if(comboMatch(match,input)){
-            //Serial.println("0");
+           // Serial.println("0");
+            finger1.lock();
+            finger2.lock();
+            finger3.lock();
+            finger4.lock();
     }
     strcpy(match, "*bc");
     if(comboMatch(match,input)){
@@ -116,6 +115,10 @@ void eventHandler(char input[4])
     strcpy(match, "#bc");
     if(comboMatch(match,input)){
             //Serial.println("#");
+            finger1.reset();        
+            finger2.reset();
+            finger3.reset();
+            finger4.reset();
     }  
 }
 

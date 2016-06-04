@@ -29,7 +29,12 @@
   Finger finger3 (MotorSpd3, MotorDir3); // create motor 3 object
   Finger finger4 (MotorSpd4, MotorDir4); // create motor 4 object
 
-//Motor motor (MotorSpd1, MotorDir1);
+/*Motor motor (MotorSpd1, MotorDir1);
+Motor motor1 (MotorSpd1, MotorDir1);
+Motor motor2 (MotorSpd2, MotorDir2);
+Motor motor3 (MotorSpd3, MotorDir3);
+Motor motor4 (MotorSpd4, MotorDir4);*/
+
 //declare timer
 unsigned long timer = 0;
 unsigned long ex_timer = 0;
