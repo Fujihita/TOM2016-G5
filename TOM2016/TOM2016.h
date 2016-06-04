@@ -1,24 +1,24 @@
-#define   KeyPadCol1    3
-#define   KeyPadCol2    4
-#define   KeyPadCol3    5
-#define   KeyPadRow1    6
-#define   KeyPadRow2    7 // omitted
-#define   KeyPadRow3    8
-#define   KeyPadRow4    9
+#define   KeyPadCol1    A0
+#define   KeyPadCol2    A1
+#define   KeyPadCol3    A2
+#define   KeyPadRow1    A3
+#define   KeyPadRow2    A4 
+#define   KeyPadRow3    A5
+#define   KeyPadRow4    A6
 #define   cols     3
-#define   rows     3
+#define   rows     4
 
-#define   MotorSpd1     11
-#define   MotorDir1     10
+#define   MotorSpd1     9
+#define   MotorDir1     8
 
-#define   MotorSpd2     A0
-#define   MotorDir2     A1
+#define   MotorSpd2     6
+#define   MotorDir2     7
 
-#define   MotorSpd3     A2
-#define   MotorDir3     A3
+#define   MotorSpd3     5
+#define   MotorDir3     4
 
-#define   MotorSpd4     A4
-#define   MotorDir4     A5
+#define   MotorSpd4     3
+#define   MotorDir4     2
 
 #define   TimeDelay     2000
 #define   TimeDebounce  50
@@ -43,8 +43,9 @@ unsigned long ex_timer = 0;
 char keys[rows][cols] = {
   {'1','2','3'},
   {'4','5','6'},
+  {'7','8','9'},
   {'*','0','#'}
 };
-byte rowPins[rows] = {KeyPadRow4, KeyPadRow3, KeyPadRow1}; //connect to the row pinouts of the keypad
+byte rowPins[rows] = {KeyPadRow4, KeyPadRow3, KeyPadRow2, KeyPadRow1}; //connect to the row pinouts of the keypad
 byte colPins[cols] = {KeyPadCol3, KeyPadCol2, KeyPadCol1}; //connect to the column pinouts of the keypad
 Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, rows, cols );

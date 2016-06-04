@@ -80,7 +80,7 @@ void eventHandler(char input[4])
             finger3.unlock();
             finger4.lock();
     }
-    strcpy(match, "4bc");
+/*    strcpy(match, "4bc");
     if(comboMatch(match,input)){
             //Serial.println("4");
             finger1.lock();
@@ -98,19 +98,22 @@ void eventHandler(char input[4])
     }
     strcpy(match, "6bc");
     if(comboMatch(match,input)){
-            //Serial.println("6");
-    }
+            //Serial.println("6"); 
+    }*/
     strcpy(match, "0bc");
     if(comboMatch(match,input)){
            // Serial.println("0");
             finger1.lock();
             finger2.lock();
             finger3.lock();
-            finger4.lock();
+            finger4.unlock();
     }
     strcpy(match, "*bc");
     if(comboMatch(match,input)){
-            //Serial.println("*");
+            finger1.unlock();        
+            finger2.unlock();
+            finger3.unlock();
+            finger4.unlock();
     }
     strcpy(match, "#bc");
     if(comboMatch(match,input)){

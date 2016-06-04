@@ -6,7 +6,7 @@
 Finger::Finger(int spPin, int dirPin) : _motor(spPin, dirPin)
 {
   _motor.base(255);
-  _timeout = 6000; //3 secs
+  _timeout = 3000; //3 secs
   _dir = true;
   _status = 0;
   _offset = 0;
@@ -91,6 +91,7 @@ void Finger::_releaseLock()
 		{
 			_motor.run(-SPEED);
 		}
+		lock();
 	}
 }
 
