@@ -1,27 +1,24 @@
-#define   KeyPadCol1    A0
-#define   KeyPadCol2    A1
-#define   KeyPadCol3    A2
-#define   KeyPadRow1    A3
-#define   KeyPadRow2    A4 
-#define   KeyPadRow3    A5
-#define   KeyPadRow4    A6
+#define   KeyPadCol1    0
+#define   KeyPadCol2    1
+#define   KeyPadCol3    2
+#define   KeyPadRow1    3
+#define   KeyPadRow2    4 
+#define   KeyPadRow3    5
+#define   KeyPadRow4    6
 #define   cols     3
 #define   rows     4
 
-#define   MotorSpd1     9
-#define   MotorDir1     8
+#define   MotorSpd1     A0
+#define   MotorDir1     A1
 
-#define   MotorSpd2     6
-#define   MotorDir2     7
+#define   MotorSpd2     A2
+#define   MotorDir2     A3
 
-#define   MotorSpd3     5
-#define   MotorDir3     4
+#define   MotorSpd3     A4
+#define   MotorDir3     A5
 
-#define   MotorSpd4     3
-#define   MotorDir4     2
-
-#define   TimeDelay     2000
-#define   TimeDebounce  50
+#define   MotorSpd4     11
+#define   MotorDir4     12
 
 //load default pin mapping
   Finger finger1 (MotorSpd1, MotorDir1); // create motor 1 object

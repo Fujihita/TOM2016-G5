@@ -6,13 +6,9 @@
 
 void setup()
 {
-//  Serial.begin(9600);  
+  //Serial.begin(9600);  
 //initialize starting values
   timer = millis();
-  //motor1.run(255);
-  //motor2.run(255);
-  //motor3.run(255);
-  //motor4.run(255);
 }
 
 void loop()
@@ -66,7 +62,7 @@ void eventHandler(char input[4])
     }
     strcpy(match, "2bc");
     if(comboMatch(match,input)){
-           // Serial.println("2");
+            //Serial.println("2");
             finger1.lock();
             finger2.unlock();
             finger3.lock();
@@ -74,7 +70,7 @@ void eventHandler(char input[4])
     }
     strcpy(match, "3bc");
     if(comboMatch(match,input)){
-           // Serial.println("3");
+            //Serial.println("3");
             finger1.lock();
             finger2.lock();
             finger3.unlock();
@@ -102,7 +98,7 @@ void eventHandler(char input[4])
     }*/
     strcpy(match, "0bc");
     if(comboMatch(match,input)){
-           // Serial.println("0");
+            //Serial.println("0");
             finger1.lock();
             finger2.lock();
             finger3.lock();
@@ -110,6 +106,7 @@ void eventHandler(char input[4])
     }
     strcpy(match, "*bc");
     if(comboMatch(match,input)){
+            //Serial.println("*");
             finger1.unlock();        
             finger2.unlock();
             finger3.unlock();

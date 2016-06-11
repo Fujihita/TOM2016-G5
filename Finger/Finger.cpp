@@ -2,13 +2,16 @@
 #include "Motor.h"
 #include "Finger.h"
 #define	SPEED	150
+#define READY	1
+#define RESET	1
+#define	UNLOCK	2
 
 Finger::Finger(int spPin, int dirPin) : _motor(spPin, dirPin)
 {
   _motor.base(255);
   _timeout = 3000; //3 secs
   _dir = true;
-  _status = 0;
+  _status = READY;
   _offset = 0;
   
   _timer = millis();	
@@ -22,11 +25,11 @@ void Finger::timeout(unsigned long timeout){
 void Finger::lock(){
 //_motor.run(0);
 	_setLock();
-	_status = 0;
+	_status = READY;
 }
 
 void Finger::reset(){
-	_status = 1;
+	_status = RESET;
 	// start motor in reverse direction
 	if (_dir)
 	{
@@ -46,18 +49,18 @@ void Finger::unlock(){
 	{
 		_motor.run(-SPEED);
 	}
-	_status = 2;
+	_status = UNLOCK;
 }
 
 void Finger::run(){	
 	switch(_status)
 	{
-		case 1:
+		case RESET:
 		{
 			_backToStart();
 			break;
 		}
-		case 2:
+		case UNLOCK:
 		{
 			_releaseLock();
 			break;
